@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BluePlayerPiece : MonoBehaviour
+public class BluePlayerPiece : PlayerPiece      // Inherits from PlayerPiece class
 {
     
 }

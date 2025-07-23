@@ -1,7 +1,8 @@
 using UnityEngine;
 
-public class RedPlayerPiece : MonoBehaviour
+public class RedPlayerPiece : PlayerPiece
 {
+
     
 }
 
