@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 5006631858505099830}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.04, y: 0.19, z: 0}
+  m_LocalPosition: {x: 0.09, y: 0.15, z: 0}
   m_LocalScale: {x: 0.21355015, y: 0.16961011, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1591626494, guid: 3da0859a66c5e6a4892528ded236d8df, type: 3}
+  m_Sprite: {fileID: -629220995, guid: 1290a221afb69fe43af419e1044b1415, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -96,8 +96,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7602465919721967163}
+  - component: {fileID: 7665988875491367158}
   m_Layer: 0
-  m_Name: blueplayerpawn
+  m_Name: YellowPlayerpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -119,6 +120,18 @@ Transform:
   - {fileID: 5019708248231818198}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7665988875491367158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5350205142922638316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32d591abd99c34d4b8f4f446a9c19bcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2046934440739100255
 PrefabInstance:
   m_ObjectHideFlags: 0
