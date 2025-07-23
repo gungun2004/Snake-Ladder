@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class YellowPlayerPiece : MonoBehaviour
+public class YellowPlayerPiece : PlayerPiece
 {
     
 }
