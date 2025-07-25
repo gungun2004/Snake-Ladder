@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 public class PlayerPiece : MonoBehaviour
 {
@@ -7,12 +7,14 @@ public class PlayerPiece : MonoBehaviour
     public int numberOfStepsAlreadyMove;
     public bool isReady;
     public PathObjectPoint pathParent;
+
+    [System.Obsolete]
     private void Awake()
     {
         pathParent = FindObjectOfType<PathObjectPoint>();
 
     }
-    public void MakePlayerReadyToMove(PathPoint[] pathParent_)
+    public void MakePlayerReadyToMove( PathPoint[] pathParent_)
     {
         isReady = true;
         transform.position = pathParent_[0].transform.position;
@@ -25,13 +27,22 @@ public class PlayerPiece : MonoBehaviour
     }
     private IEnumerator MoveStep_enum(PathPoint[] pathParent_)
     {
-        numberOfStepsToMove = 5;
-        for (int i = numberOfStepsAlreadyMove; i < numberOfStepsAlreadyMove + numberOfStepsToMove; i++)
+        numberOfStepsToMove = GameManager.gm.numberOfStepsToMove;
+
+        int targetStep = numberOfStepsAlreadyMove + numberOfStepsToMove;
+        if (targetStep > pathParent_.Length)
+        {
+            targetStep = pathParent_.Length;
+        }
+
+        for (int i = numberOfStepsAlreadyMove; i < targetStep; i++)
         {
             transform.position = pathParent_[i].transform.position;
             yield return new WaitForSeconds(0.35f);
         }
-        numberOfStepsAlreadyMove += numberOfStepsToMove;
+
+        numberOfStepsAlreadyMove = targetStep;
     }
+
 
 }
