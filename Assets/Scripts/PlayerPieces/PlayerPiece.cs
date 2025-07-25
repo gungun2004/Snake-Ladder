@@ -2,11 +2,13 @@
 using System.Collections;
 public class PlayerPiece : MonoBehaviour
 {
+
     public bool moveNow;
     public int numberOfStepsToMove;
     public int numberOfStepsAlreadyMove;
     public bool isReady;
     public PathObjectPoint pathParent;
+    Coroutine playerMovement;
 
     [System.Obsolete]
     private void Awake()
@@ -23,7 +25,7 @@ public class PlayerPiece : MonoBehaviour
 
     public void MovePlayer(PathPoint[] pathParent_)
     {
-        StartCoroutine(MoveStep_enum(pathParent_));
+       playerMovement= StartCoroutine(MoveStep_enum(pathParent_));
     }
     private IEnumerator MoveStep_enum(PathPoint[] pathParent_)
     {
@@ -42,6 +44,14 @@ public class PlayerPiece : MonoBehaviour
         }
 
         numberOfStepsAlreadyMove = targetStep;
+        GameManager.gm.numberOfStepsToMove = 0;
+        GameManager.gm.canPlayerMove = true;
+
+        if(playerMovement !=null)
+        {
+            StopCoroutine("MoveStep_enum");
+        }
+
     }
 
 

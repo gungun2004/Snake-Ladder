@@ -3,18 +3,31 @@ using System.Collections; // Required for IEnumerator
 
 public class BluePlayerPiece : PlayerPiece
 {
+    RollingDice blueHomeRollingDice;
     void Start()
     {
-       
+        blueHomeRollingDice = GetComponentInParent < BlueHome>().rollingDice; 
     }
 
     public void OnMouseDown()
     {
-        if (!isReady)
+        if (GameManager.gm.rollingDice != null)
         {
-            MakePlayerReadyToMove(pathParent.BluePathPoint);
-            return;
+            if (!isReady)
+            {
+                if (GameManager.gm.rollingDice == blueHomeRollingDice && GameManager.gm.numberOfStepsToMove == 6 && GameManager.gm.canPlayerMove)
+                {
+                    MakePlayerReadyToMove(pathParent.BluePathPoint);
+                    GameManager.gm.numberOfStepsToMove = 0;
+                    return;
+                }
+            }
+            if(GameManager.gm.rollingDice==blueHomeRollingDice && isReady && GameManager.gm.canPlayerMove)
+            {
+                GameManager.gm.canPlayerMove = false;
+                MovePlayer(pathParent.BluePathPoint);
+            }
+           
         }
-        MovePlayer(pathParent.BluePathPoint);
     }
 }

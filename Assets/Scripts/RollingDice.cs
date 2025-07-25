@@ -30,6 +30,7 @@ public class RollingDice : MonoBehaviour
                 numberSpriteHolder.sprite = numberSprites[numberGot];
                 numberGot++;
             GameManager.gm.numberOfStepsToMove = numberGot;
+            GameManager.gm.rollingDice = this;
 
                 numberSpriteHolder.gameObject.SetActive(true);
                 rollingDiceAnimation.gameObject.SetActive(false);
