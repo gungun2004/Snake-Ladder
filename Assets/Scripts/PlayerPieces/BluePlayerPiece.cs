@@ -15,7 +15,6 @@ public class BluePlayerPiece : PlayerPiece
             MakePlayerReadyToMove(pathParent.BluePathPoint);
             return;
         }
-
         MovePlayer(pathParent.BluePathPoint);
     }
 }
