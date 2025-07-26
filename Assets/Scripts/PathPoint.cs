@@ -10,8 +10,6 @@ public class PathPoint : MonoBehaviour
     {
         pathObjectPoint = GetComponentInParent<PathObjectPoint>();
     }
-
-   
     public void AddPlayerPiece(PlayerPiece playerPiece_)
     {
         playerPieceList.Add(playerPiece_);
@@ -58,7 +56,8 @@ public class PathPoint : MonoBehaviour
 
         for (int i = 0; i < playerPieceList.Count; i++)
         {
-            playerPieceList[i].GetComponentInChildren<SpriteRenderer>().sortingOrder = spriteLayer++;
+            playerPieceList[i].GetComponentInChildren<SpriteRenderer>().sortingOrder = SpriteLayer;
+            SpriteLayer ++;
         }
     }
 
