@@ -2864,6 +2864,8 @@ MonoBehaviour:
   numberOfStepsAlreadyMove: 0
   isReady: 0
   pathParent: {fileID: 1887248398}
+  priviousPathPoint: {fileID: 0}
+  currentPathPoint: {fileID: 0}
 --- !u!1001 &563293092
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6203,61 +6205,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2106385195}
     m_Modifications:
-    - target: {fileID: 1305015570282706331, guid: e27c73c26320aaf4dbb9f21f638def8d, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.4426585
-      objectReference: {fileID: 0}
-    - target: {fileID: 1305015570282706331, guid: e27c73c26320aaf4dbb9f21f638def8d, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.4932673
-      objectReference: {fileID: 0}
-    - target: {fileID: 1305015570282706331, guid: e27c73c26320aaf4dbb9f21f638def8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.03
-      objectReference: {fileID: 0}
-    - target: {fileID: 1305015570282706331, guid: e27c73c26320aaf4dbb9f21f638def8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1305015570282706331, guid: e27c73c26320aaf4dbb9f21f638def8d, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1305015570282706331, guid: e27c73c26320aaf4dbb9f21f638def8d, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1305015570282706331, guid: e27c73c26320aaf4dbb9f21f638def8d, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
+    - target: {fileID: 2152754126752965943, guid: e27c73c26320aaf4dbb9f21f638def8d, type: 3}
+      propertyPath: pathObjectPoint
+      value: 
+      objectReference: {fileID: 1887248398}
     - target: {fileID: 4984428135560654018, guid: e27c73c26320aaf4dbb9f21f638def8d, type: 3}
       propertyPath: m_Name
       value: PathPoint
-      objectReference: {fileID: 0}
-    - target: {fileID: 5736094351420033422, guid: e27c73c26320aaf4dbb9f21f638def8d, type: 3}
-      propertyPath: m_FlipX
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5736094351420033422, guid: e27c73c26320aaf4dbb9f21f638def8d, type: 3}
-      propertyPath: m_Color.a
-      value: 0.972549
-      objectReference: {fileID: 0}
-    - target: {fileID: 5736094351420033422, guid: e27c73c26320aaf4dbb9f21f638def8d, type: 3}
-      propertyPath: m_Color.b
-      value: 0.7686275
-      objectReference: {fileID: 0}
-    - target: {fileID: 5736094351420033422, guid: e27c73c26320aaf4dbb9f21f638def8d, type: 3}
-      propertyPath: m_Color.g
-      value: 0.7686275
-      objectReference: {fileID: 0}
-    - target: {fileID: 5736094351420033422, guid: e27c73c26320aaf4dbb9f21f638def8d, type: 3}
-      propertyPath: m_Color.r
-      value: 0.7686275
-      objectReference: {fileID: 0}
-    - target: {fileID: 8565330052789401966, guid: e27c73c26320aaf4dbb9f21f638def8d, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8565330052789401966, guid: e27c73c26320aaf4dbb9f21f638def8d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11034,6 +10988,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19a6fc2686611284ea2f18cd1b543765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pathObjectPoint: {fileID: 1887248398}
+  playerPieceList: []
   CommonPathPoint:
   - {fileID: 2050862417}
   - {fileID: 1706846275}
@@ -11315,6 +11271,24 @@ MonoBehaviour:
   - {fileID: 2032798188}
   - {fileID: 1252009419}
   - {fileID: 1945012503}
+  scales:
+  - 1
+  - 0.9
+  - 0.8
+  - 0.7
+  - 0.75
+  - 0.6
+  - 0.65
+  - 0.5
+  positionDifference:
+  - 0
+  - 0.1
+  - 0.07
+  - 0.06
+  - 0.05
+  - 0.04
+  - 0.04
+  - 0.03
 --- !u!1001 &1887445913
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12101,7 +12075,6 @@ Transform:
   - {fileID: 1390135749}
   - {fileID: 1905569450}
   - {fileID: 769076910}
-  - {fileID: 2043917268}
   - {fileID: 570738830}
   - {fileID: 2075910153}
   - {fileID: 1588332540}
@@ -12109,6 +12082,7 @@ Transform:
   - {fileID: 1620368427}
   - {fileID: 850888077}
   - {fileID: 1446838414}
+  - {fileID: 2043917268}
   - {fileID: 818825850}
   - {fileID: 1251874597}
   - {fileID: 1259518821}
