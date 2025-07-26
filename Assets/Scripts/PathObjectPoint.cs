@@ -7,6 +7,10 @@ public class PathObjectPoint :PathPoint
     public PathPoint[] YellowPathPoint;
     public PathPoint[] GreenPathPoint;
     public PathPoint[] BluePathPoint;
+    [Header("Scale and positning Difference")]
+    public float[] scales;
+    public float[] positionDifference;
+
     void Start()
     {
        
@@ -17,6 +21,4 @@ public class PathObjectPoint :PathPoint
     {
         
     }
-    //tanu cahanged the file 
-
 }

@@ -9,6 +9,8 @@ public class PlayerPiece : MonoBehaviour
     public bool isReady;
     public PathObjectPoint pathParent;
     Coroutine playerMovement;
+    public PathPoint priviousPathPoint;
+    public PathPoint currentPathPoint;
 
     [System.Obsolete]
     private void Awake()
@@ -21,6 +23,11 @@ public class PlayerPiece : MonoBehaviour
         isReady = true;
         transform.position = pathParent_[0].transform.position;
         numberOfStepsAlreadyMove = 1;
+
+        priviousPathPoint = pathParent_[0];
+        currentPathPoint = pathParent_[0];
+        currentPathPoint.AddPlayerPiece(this);
+        GameManager.gm.AddPathPoint(currentPathPoint);
     }
 
     public void MovePlayer(PathPoint[] pathParent_)
@@ -50,6 +57,15 @@ public class PlayerPiece : MonoBehaviour
         {
             numberOfStepsAlreadyMove = targetStep;
             GameManager.gm.numberOfStepsToMove = 0;
+
+            GameManager.gm.RemovePathPoint(priviousPathPoint);
+            priviousPathPoint.RemovePlayerPiece(this);
+
+            currentPathPoint = pathParent_[numberOfStepsAlreadyMove-1];
+            currentPathPoint.AddPlayerPiece(this);
+            GameManager.gm.AddPathPoint(currentPathPoint);
+
+            priviousPathPoint = currentPathPoint;
          
         }
         GameManager.gm.canPlayerMove = true;
