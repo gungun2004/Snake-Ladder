@@ -45,6 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2382b5fc8aa17e4ca8661cb94f995cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pathObjectPoint: {fileID: 0}
+  playerPieceList: []
 --- !u!1 &7530667271997854738
 GameObject:
   m_ObjectHideFlags: 0
@@ -100,7 +102,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  - {fileID: 2100000, guid: 15d0c3709176029428a0da2f8cecf0b5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

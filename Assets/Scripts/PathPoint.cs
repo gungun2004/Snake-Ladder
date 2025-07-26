@@ -9,15 +9,10 @@ public class PathPoint : MonoBehaviour
     {
         pathObjectPoint = GetComponentInParent<PathObjectPoint>();
     }
-
-    // Update is called once per frame
-     public void Awake()
-    {
-        
-    }
     public void AddPlayerPiece(PlayerPiece playerPiece_)
     {
         playerPieceList.Add(playerPiece_);
+        RescaleandRepositioningAllPlayerPiece();
     }
     public void RemovePlayerPiece(PlayerPiece  playerPiece_)
     {
@@ -56,7 +51,7 @@ public class PathPoint : MonoBehaviour
         for(int i=0; i<playerPieceList.Count;i++)
         {
             playerPieceList[i].GetComponentInChildren<SpriteRenderer>().sortingOrder = SpriteLayer;
-            SpriteLayer ++;
+            SpriteLayer++;
         }
     }
 }

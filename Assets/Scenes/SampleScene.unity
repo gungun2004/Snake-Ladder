@@ -859,6 +859,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: YellowRollingDice
       objectReference: {fileID: 0}
+    - target: {fileID: 402112267552379810, guid: 2f16d0cb19ca2fc45802a064c0c39a38, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7730881026609823426, guid: 2f16d0cb19ca2fc45802a064c0c39a38, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.02
@@ -925,6 +929,10 @@ PrefabInstance:
     - target: {fileID: 402112267552379810, guid: 2f16d0cb19ca2fc45802a064c0c39a38, type: 3}
       propertyPath: m_Name
       value: GreenRollingDice
+      objectReference: {fileID: 0}
+    - target: {fileID: 402112267552379810, guid: 2f16d0cb19ca2fc45802a064c0c39a38, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7730881026609823426, guid: 2f16d0cb19ca2fc45802a064c0c39a38, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2864,6 +2872,8 @@ MonoBehaviour:
   numberOfStepsAlreadyMove: 0
   isReady: 0
   pathParent: {fileID: 1887248398}
+  priviousPathPoint: {fileID: 0}
+  currentPathPoint: {fileID: 0}
 --- !u!1001 &563293092
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5571,7 +5581,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5736094351420033422, guid: e27c73c26320aaf4dbb9f21f638def8d, type: 3}
       propertyPath: m_Color.a
-      value: 0.972549
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5736094351420033422, guid: e27c73c26320aaf4dbb9f21f638def8d, type: 3}
       propertyPath: m_Color.b
@@ -6241,7 +6251,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5736094351420033422, guid: e27c73c26320aaf4dbb9f21f638def8d, type: 3}
       propertyPath: m_Color.a
-      value: 0.972549
+      value: 0.14901961
       objectReference: {fileID: 0}
     - target: {fileID: 5736094351420033422, guid: e27c73c26320aaf4dbb9f21f638def8d, type: 3}
       propertyPath: m_Color.b
@@ -7491,6 +7501,13 @@ MonoBehaviour:
   numberOfStepsToMove: 0
   rollingDice: {fileID: 0}
   canPlayerMove: 1
+  canDiceRoll: 1
+  transferDice: 0
+  rollingDiceList:
+  - {fileID: 810393415}
+  - {fileID: 1352348547}
+  - {fileID: 1323291026}
+  - {fileID: 1128625575}
 --- !u!4 &1309328118
 Transform:
   m_ObjectHideFlags: 0
@@ -8035,6 +8052,10 @@ PrefabInstance:
     - target: {fileID: 402112267552379810, guid: 2f16d0cb19ca2fc45802a064c0c39a38, type: 3}
       propertyPath: m_Name
       value: RedRollingDice
+      objectReference: {fileID: 0}
+    - target: {fileID: 402112267552379810, guid: 2f16d0cb19ca2fc45802a064c0c39a38, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7730881026609823426, guid: 2f16d0cb19ca2fc45802a064c0c39a38, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11034,6 +11055,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19a6fc2686611284ea2f18cd1b543765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pathObjectPoint: {fileID: 0}
+  playerPieceList: []
   CommonPathPoint:
   - {fileID: 2050862417}
   - {fileID: 1706846275}
@@ -11315,6 +11338,24 @@ MonoBehaviour:
   - {fileID: 2032798188}
   - {fileID: 1252009419}
   - {fileID: 1945012503}
+  scales:
+  - 0
+  - 0.9
+  - 0.8
+  - 0.7
+  - 0.75
+  - 0.6
+  - 0.65
+  - 0.5
+  positionDifference:
+  - 0
+  - 0.1
+  - 0.07
+  - 0.06
+  - 0.05
+  - 0.04
+  - 0.04
+  - 0.03
 --- !u!1001 &1887445913
 PrefabInstance:
   m_ObjectHideFlags: 0
