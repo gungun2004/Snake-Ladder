@@ -15,6 +15,7 @@ public class YellowPlayerPiece : PlayerPiece
             {
                 if (GameManager.gm.rollingDice == yellowHomeRollingDice && GameManager.gm.numberOfStepsToMove == 6 && GameManager.gm.canPlayerMove)
                 {
+                    GameManager.gm.yellowOutPlayer += 1;
                     MakePlayerReadyToMove(pathParent.YellowPathPoint);
                     GameManager.gm.numberOfStepsToMove = 0;
                     return;
