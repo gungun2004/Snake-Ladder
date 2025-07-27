@@ -1,15 +1,80 @@
 using UnityEngine;
 using System.Collections.Generic;
-
+using System.Collections;
 public class PathPoint : MonoBehaviour
 {
     public PathObjectPoint pathObjectPoint;
-   public List<PlayerPiece> playerPieceList = new List<PlayerPiece>();
+    public  List<PlayerPiece> playerPieceList = new List<PlayerPiece>();
+    PathPoint[] pathPointToMoveOn_;
+
     void Start()
     {
         pathObjectPoint = GetComponentInParent<PathObjectPoint>();
     }
-    public void AddPlayerPiece(PlayerPiece playerPiece_)
+
+    public bool AddPlayerPiece(PlayerPiece playerPiece_)
+    {
+        if (!pathObjectPoint.SafePoint.Contains(this)) 
+        {
+            if (playerPieceList.Count == 1)
+            {
+                string prePlayerPieceName = playerPieceList[0].name;
+                string currentPlayerPieceName = playerPiece_.name;
+                currentPlayerPieceName = currentPlayerPieceName.Substring(0, currentPlayerPieceName.Length - 4);
+                if (!prePlayerPieceName.Contains(currentPlayerPieceName))
+                {
+                    playerPieceList[0].isReady = false;
+
+                    StartCoroutine(reverOnStart(playerPieceList[0]));
+
+                    playerPieceList[0].numberOfStepsAlreadyMove = 0;
+                    RemovePlayerPiece(playerPieceList[0]);
+                    playerPieceList.Add(playerPiece_);
+                    return false;
+                }
+            }
+        }
+        addPlayer(playerPiece_);
+        return true;
+    }
+    IEnumerator reverOnStart(PlayerPiece playerPiece_)
+    {
+        if(playerPiece_.name.Contains("blue")){GameManager.gm.blueOutPlayer -= 1;pathPointToMoveOn_ = pathObjectPoint.BluePathPoint;
+        }
+        else if (playerPiece_.name.Contains("Red"))
+        {
+            GameManager.gm.redOutPlayer -= 1; pathPointToMoveOn_ = pathObjectPoint.RedPathPoint;
+        }
+        else
+         if (playerPiece_.name.Contains("Green"))
+        {
+            GameManager.gm.greenOutPlayer -= 1; pathPointToMoveOn_ = pathObjectPoint.GreenPathPoint;
+        }
+        else
+        {
+            GameManager.gm.yellowOutPlayer -= 1; pathPointToMoveOn_ = pathObjectPoint.YellowPathPoint;
+        }
+
+        for(int i=playerPiece_.numberOfStepsAlreadyMove-1;i>=0;i--)
+        {
+            playerPiece_.transform.position = pathPointToMoveOn_[i].transform.position;
+            yield return new WaitForSeconds(0.03f);
+        }
+
+        playerPiece_.transform.position = pathObjectPoint.BasePoint[BasePointPosition(playerPiece_.name)].transform.position;
+    }
+    int BasePointPosition(string name)
+    {
+        for(int i=0;i<pathObjectPoint.BasePoint.Length;i++)
+        {
+            if (pathObjectPoint.BasePoint[i].name==name)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+    void addPlayer(PlayerPiece playerPiece_)
     {
         playerPieceList.Add(playerPiece_);
         RescaleandRepositioningAllPlayerPiece();
@@ -25,33 +90,39 @@ public class PathPoint : MonoBehaviour
 
     public void RescaleandRepositioningAllPlayerPiece()
     {
-        int plsCont = playerPieceList.Count;
-        bool isOdd = (plsCont/2)==0?false:true;
+        int plsCount = playerPieceList.Count;
+        if (plsCount == 0) return;
 
-        int extent = plsCont / 2;
-        int counter= 0;
-        int SpriteLayer = 0;
+        bool isOdd = (plsCount / 2) == 0 ?false :true;
 
-        if(isOdd)
+        int extent = plsCount / 2;
+        int counter = 0;
+        int spriteLayer = 0;
+        if (isOdd)
         {
-            for(int i = -extent ; i<=extent;i++)
+            for (int i = -extent; i <= extent; i++)
             {
-                playerPieceList[counter].transform.localScale = new Vector3(pathObjectPoint.scales[plsCont-1],pathObjectPoint.scales[plsCont-1],1f);
-                playerPieceList[counter].transform.position = new Vector3(transform.position.x+(i*pathObjectPoint.positionDifference[plsCont-1]),transform.position.y,0f);
+                playerPieceList[counter].transform.localScale = new Vector3(pathObjectPoint.scales[plsCount - 1], pathObjectPoint.scales[plsCount - 1], 1f);
+
+                playerPieceList[counter].transform.position = new Vector3(transform.position.x + (i * pathObjectPoint.positionDifference[plsCount - 1]), transform.position.y, 0f);
             }
         }
         else
         {
-           for(int i = -extent ; i < extent;i++)
-            {
-                playerPieceList[counter].transform.localScale = new Vector3(pathObjectPoint.scales[plsCont-1],pathObjectPoint.scales[plsCont-1],1f);
-                playerPieceList[counter].transform.position = new Vector3(transform.position.x+(i*pathObjectPoint.positionDifference[plsCont-1]),transform.position.y,0f);
+            for (int i = -extent; i < extent; i++) {
+
+                playerPieceList[counter].transform.localScale = new Vector3(pathObjectPoint.scales[plsCount - 1], pathObjectPoint.scales[plsCount - 1], 1f);
+
+                playerPieceList[counter].transform.position = new Vector3(transform.position.x + (i * pathObjectPoint.positionDifference[plsCount - 1]), transform.position.y, 0f);
             }
+        
         }
-        for(int i=0; i<playerPieceList.Count;i++)
+
+        for (int i = 0; i < playerPieceList.Count; i++)
         {
-            playerPieceList[i].GetComponentInChildren<SpriteRenderer>().sortingOrder = SpriteLayer;
-            SpriteLayer++;
+            playerPieceList[i].GetComponentInChildren<SpriteRenderer>().sortingOrder = spriteLayer++;
+
         }
     }
+
 }

@@ -38,6 +38,7 @@ public class RollingDice : MonoBehaviour
             if(GameManager.gm.numberOfStepsToMove!=6&&outPlayers()==0)
             {
                 GameManager.gm.transferDice = true;
+                yield return new WaitForSeconds(0.5f);
                 GameManager.gm.rollingDiceTrasfer();
             }
            

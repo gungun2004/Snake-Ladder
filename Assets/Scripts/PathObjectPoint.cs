@@ -1,4 +1,6 @@
+using NUnit.Framework;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class PathObjectPoint :PathPoint
 {
@@ -10,7 +12,8 @@ public class PathObjectPoint :PathPoint
     [Header("Scale and positning Difference")]
     public float[] scales;
     public float[] positionDifference;
-
+    public PathPoint[] BasePoint;
+    public List<PathPoint> SafePoint;
     void Start()
     {
        
