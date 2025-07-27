@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-
+using System.Collections.Generic;
 public class RollingDice : MonoBehaviour
 {
     [SerializeField] Sprite[] numberSprites;
@@ -8,12 +8,17 @@ public class RollingDice : MonoBehaviour
     [SerializeField] int numberGot;
     [SerializeField] SpriteRenderer rollingDiceAnimation;
     Coroutine generateRandomNumberDice;
+    int outPlayer;
+   List <PlayerPiece> playerPieces;
+    PathPoint[] currentPathPoint;
+    public PlayerPiece currentPlayerPiece;
    
-    private void Start()
-    {
-
-    }
     public void OnMouseDown()
+    {
+        generateRandomNumberDice = StartCoroutine(rollDice());
+    }
+
+    public void MouseRole()
     {
         generateRandomNumberDice = StartCoroutine(rollDice());
     }
@@ -26,7 +31,20 @@ public class RollingDice : MonoBehaviour
             numberSpriteHolder.gameObject.SetActive(false);
             rollingDiceAnimation.gameObject.SetActive(true);
             yield return new WaitForSeconds(0.8f);
-            numberGot = Random.Range(0, 6);
+            int maxnum = 6;
+            if(GameManager.gm.totalSix==2)
+            {
+                maxnum = 5;
+                GameManager.gm.totalSix = 0;
+            }
+
+            numberGot = Random.Range(0, maxnum);
+            if(numberGot==5)
+            {
+                GameManager.gm.totalSix += 1;
+            }
+
+
             numberSpriteHolder.sprite = numberSprites[numberGot];
             numberGot++;
             GameManager.gm.numberOfStepsToMove = numberGot;
@@ -34,14 +52,30 @@ public class RollingDice : MonoBehaviour
 
             numberSpriteHolder.gameObject.SetActive(true);
             rollingDiceAnimation.gameObject.SetActive(false);
+            outPlayers();
 
-            if(GameManager.gm.numberOfStepsToMove!=6&&outPlayers()==0)
+            if (playerCanMove())
             {
-                GameManager.gm.transferDice = true;
-                yield return new WaitForSeconds(0.5f);
-                GameManager.gm.rollingDiceTrasfer();
+                if(outPlayer==0)
+                {
+                    ReadyToMove();
+                   
+                }
+                else
+                {
+                    currentPlayerPiece.MovePlayer(currentPathPoint);
+                }
             }
-           
+            else
+             if (GameManager.gm.numberOfStepsToMove != 6 && outPlayer == 0)
+            {
+               
+                yield return new WaitForSeconds(0.5f);
+                GameManager.gm.transferDice = true;
+                GameManager.gm.rollingDiceTrasfer();
+
+            }
+
 
             if (generateRandomNumberDice != null)
             {
@@ -50,17 +84,96 @@ public class RollingDice : MonoBehaviour
         }     
 
     }
-    public int outPlayers()
+    public void outPlayers()
     {
         if (GameManager.gm.rollingDice == GameManager.gm.rollingDiceList[0])
-            return GameManager.gm.blueOutPlayer;
+        {
+            playerPieces = GameManager.gm.bluePlayerPieces;
+            currentPathPoint = playerPieces[0].pathParent.BluePathPoint;
+            outPlayer = GameManager.gm.blueOutPlayer;
+        }
         else if (GameManager.gm.rollingDice == GameManager.gm.rollingDiceList[1])
-            return GameManager.gm.redOutPlayer;
+        {
+            playerPieces = GameManager.gm.redPlayerPieces;
+             currentPathPoint = playerPieces[0].pathParent.RedPathPoint;
+            outPlayer = GameManager.gm.redOutPlayer;
+        }
         else if (GameManager.gm.rollingDice == GameManager.gm.rollingDiceList[2])
-            return GameManager.gm.greenOutPlayer;
+        {
+            playerPieces = GameManager.gm.greenPlayerPieces;
+            currentPathPoint = playerPieces[0].pathParent.GreenPathPoint;
+            outPlayer = GameManager.gm.greenOutPlayer;
+        }
         else
-            return GameManager.gm.yellowOutPlayer;
+        {
+            playerPieces = GameManager.gm.yellowPlayerPieces;
+            currentPathPoint = playerPieces[0].pathParent.YellowPathPoint;
+            outPlayer = GameManager.gm.yellowOutPlayer;
+        }
     }
 
+    public bool playerCanMove()
+    {
+        if(GameManager.gm.totalPlayersCanPlay==1)
+        {
+            if (GameManager.gm.rollingDice == GameManager.gm.rollingDiceList[2])
+            {
+                if(outPlayer>0)
+                {
+                    for (int i = 0; i < playerPieces.Count; i++)
+                    {
+                        if (playerPieces[i].isReady)
+                        {
+                            if (playerPieces[i].isPathPointAvailableToMove(GameManager.gm.numberOfStepsToMove, playerPieces[i].numberOfStepsAlreadyMove, currentPathPoint))
+                            {
+                                currentPlayerPiece = playerPieces[i];
+                                return true;
+                            }
+                        }
+                    }
+                    
+                }
+            }
+        }
+         if(outPlayer==1 && GameManager.gm.numberOfStepsToMove != 6)
+        {
+            for(int i=0; i<playerPieces.Count;i++)
+            {
+                if (playerPieces[i].isReady)
+                {
+                    if (playerPieces[i].isPathPointAvailableToMove(GameManager.gm.numberOfStepsToMove, playerPieces[i].numberOfStepsAlreadyMove,currentPathPoint))
+                    {
+                        currentPlayerPiece= playerPieces[i];
+                        return true;
+                    }
+                }
+            }
+        }
+        else if(outPlayer==0 && GameManager.gm.numberOfStepsToMove==6)
+        {
+            return true;
+        }
+            return false;
+    }
+
+    void ReadyToMove()
+    {
+
+        if (GameManager.gm.rollingDice == GameManager.gm.rollingDiceList[0])
+        {
+             GameManager.gm.blueOutPlayer+=1;
+        }
+        else if (GameManager.gm.rollingDice == GameManager.gm.rollingDiceList[1])
+        { GameManager.gm.redOutPlayer += 1;
+        }
+        else if (GameManager.gm.rollingDice == GameManager.gm.rollingDiceList[2])
+        { GameManager.gm.greenOutPlayer+=1;
+        }
+        else
+        {
+             GameManager.gm.yellowOutPlayer += 1;
+        }
+        playerPieces[0].MakePlayerReadyToMove(currentPathPoint);
+    }
 }
 
