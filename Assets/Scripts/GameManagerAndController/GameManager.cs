@@ -6,14 +6,25 @@ public class GameManager : MonoBehaviour
     public int numberOfStepsToMove;
     public RollingDice rollingDice;
     public bool canPlayerMove = true;
+
     List<PathPoint> PlayersOnPathPointList = new List<PathPoint>();
+
     public bool canDiceRoll=true;
     public bool transferDice = false;
     public List<RollingDice>rollingDiceList;
+
     public int blueOutPlayer;
     public int yellowOutPlayer;
     public int greenOutPlayer;
     public int redOutPlayer;
+
+    public int blueCompletePlayer;
+    public int yellowCompletePlayer;
+    public int greenCompletePlayer;
+    public int redCompletePlayer;
+
+    public int totalPlayersCanPlay;
+    public List<GameObject> playerHomes;
     private void Awake()
     {
         gm = this;
