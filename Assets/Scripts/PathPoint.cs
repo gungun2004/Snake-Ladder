@@ -14,6 +14,13 @@ public class PathPoint : MonoBehaviour
 
     public bool AddPlayerPiece(PlayerPiece playerPiece_)
     {
+        if (this.name == "CommonPathPoint")
+        {
+            playerPieceList.Add(playerPiece_);
+            complete(playerPiece_);
+            return false;
+
+        }
         if (!pathObjectPoint.SafePoint.Contains(this)) 
         {
             if (playerPieceList.Count == 1)
@@ -39,21 +46,10 @@ public class PathPoint : MonoBehaviour
     }
     IEnumerator reverOnStart(PlayerPiece playerPiece_)
     {
-        if(playerPiece_.name.Contains("blue")){GameManager.gm.blueOutPlayer -= 1;pathPointToMoveOn_ = pathObjectPoint.BluePathPoint;
-        }
-        else if (playerPiece_.name.Contains("Red"))
-        {
-            GameManager.gm.redOutPlayer -= 1; pathPointToMoveOn_ = pathObjectPoint.RedPathPoint;
-        }
-        else
-         if (playerPiece_.name.Contains("Green"))
-        {
-            GameManager.gm.greenOutPlayer -= 1; pathPointToMoveOn_ = pathObjectPoint.GreenPathPoint;
-        }
-        else
-        {
-            GameManager.gm.yellowOutPlayer -= 1; pathPointToMoveOn_ = pathObjectPoint.YellowPathPoint;
-        }
+        if(playerPiece_.name.Contains("blue")){GameManager.gm.blueOutPlayer -= 1;pathPointToMoveOn_ = pathObjectPoint.BluePathPoint;}
+        else if (playerPiece_.name.Contains("Red")){GameManager.gm.redOutPlayer -= 1; pathPointToMoveOn_ = pathObjectPoint.RedPathPoint;}
+        else if (playerPiece_.name.Contains("Green")){GameManager.gm.greenOutPlayer -= 1; pathPointToMoveOn_ = pathObjectPoint.GreenPathPoint;}
+        else{GameManager.gm.yellowOutPlayer -= 1; pathPointToMoveOn_ = pathObjectPoint.YellowPathPoint;}
 
         for(int i=playerPiece_.numberOfStepsAlreadyMove-1;i>=0;i--)
         {
@@ -73,6 +69,18 @@ public class PathPoint : MonoBehaviour
             }
         }
         return -1;
+    }
+    void complete(PlayerPiece playerPiece_)
+    {
+        int totalCompletePlayers;
+        if (playerPiece_.name.Contains("blue")) { GameManager.gm.blueOutPlayer -= 1; totalCompletePlayers=GameManager.gm.blueCompletePlayer += 1; }
+        else if (playerPiece_.name.Contains("Red")) { GameManager.gm.redOutPlayer -= 1; totalCompletePlayers= GameManager.gm.redCompletePlayer += 1; }
+        else if (playerPiece_.name.Contains("Green")) { GameManager.gm.greenOutPlayer -= 1; totalCompletePlayers= GameManager.gm.greenCompletePlayer += 1; }
+        else { GameManager.gm.yellowOutPlayer -= 1; totalCompletePlayers= GameManager.gm.yellowCompletePlayer += 1; }
+        if(totalCompletePlayers==4)
+        {
+            //celebration for completing 
+        }
     }
     void addPlayer(PlayerPiece playerPiece_)
     {
