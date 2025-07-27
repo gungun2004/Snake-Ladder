@@ -9356,6 +9356,27 @@ MonoBehaviour:
   - {fileID: 143960080}
   - {fileID: 2071256144}
   - {fileID: 1772888549}
+  totalSix: 0
+  bluePlayerPieces:
+  - {fileID: 1140018083}
+  - {fileID: 577386166}
+  - {fileID: 1643565891}
+  - {fileID: 888784870}
+  greenPlayerPieces:
+  - {fileID: 1366191667}
+  - {fileID: 1547684319}
+  - {fileID: 958227294}
+  - {fileID: 1620026905}
+  redPlayerPieces:
+  - {fileID: 1983709342}
+  - {fileID: 1347013118}
+  - {fileID: 1227532347}
+  - {fileID: 2023284677}
+  yellowPlayerPieces:
+  - {fileID: 1810161571}
+  - {fileID: 1019884357}
+  - {fileID: 1546067299}
+  - {fileID: 1288494368}
 --- !u!4 &1309328118
 Transform:
   m_ObjectHideFlags: 0
@@ -9365,11 +9386,11 @@ Transform:
   m_GameObject: {fileID: 1309328116}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.036250025, y: 3.36118, z: 0}
+  m_LocalPosition: {x: 0.37492, y: 0.0046100616, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1679313171}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1314998231
 GameObject:
@@ -12703,7 +12724,6 @@ Transform:
   - {fileID: 1887248397}
   - {fileID: 1365887262}
   - {fileID: 560367391}
-  - {fileID: 1309328118}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1689268041 stripped
@@ -13983,7 +14003,15 @@ MonoBehaviour:
   - {fileID: 813023400}
   - {fileID: 1906210584}
   - {fileID: 1529766635}
-  SafePoint: []
+  SafePoint:
+  - {fileID: 2050862417}
+  - {fileID: 2043917269}
+  - {fileID: 1620368428}
+  - {fileID: 1446697795}
+  - {fileID: 1558721990}
+  - {fileID: 271084631}
+  - {fileID: 1453953176}
+  - {fileID: 620002669}
 --- !u!1001 &1887445913
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15740,3 +15768,4 @@ SceneRoots:
   - {fileID: 1679313171}
   - {fileID: 403382384}
   - {fileID: 1038559858}
+  - {fileID: 1309328118}

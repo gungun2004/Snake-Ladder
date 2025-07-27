@@ -83,7 +83,7 @@ public class PlayerPiece : MonoBehaviour
         }
 
     }
-    bool isPathPointAvailableToMove(int numberOfStepsToMove,int numberOfStepsAlreadyMove, PathPoint[] pathParent_)
+    public bool isPathPointAvailableToMove(int numberOfStepsToMove,int numberOfStepsAlreadyMove, PathPoint[] pathParent_)
     {
         if (numberOfStepsToMove==0)
         {

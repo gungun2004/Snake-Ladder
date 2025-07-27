@@ -113,6 +113,7 @@ public class PathPoint : MonoBehaviour
                 playerPieceList[counter].transform.localScale = new Vector3(pathObjectPoint.scales[plsCount - 1], pathObjectPoint.scales[plsCount - 1], 1f);
 
                 playerPieceList[counter].transform.position = new Vector3(transform.position.x + (i * pathObjectPoint.positionDifference[plsCount - 1]), transform.position.y, 0f);
+             
             }
         }
         else
@@ -122,6 +123,7 @@ public class PathPoint : MonoBehaviour
                 playerPieceList[counter].transform.localScale = new Vector3(pathObjectPoint.scales[plsCount - 1], pathObjectPoint.scales[plsCount - 1], 1f);
 
                 playerPieceList[counter].transform.position = new Vector3(transform.position.x + (i * pathObjectPoint.positionDifference[plsCount - 1]), transform.position.y, 0f);
+               
             }
         
         }
