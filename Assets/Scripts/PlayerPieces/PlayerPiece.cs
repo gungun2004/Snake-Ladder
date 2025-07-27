@@ -51,8 +51,9 @@ public class PlayerPiece : MonoBehaviour
         {
             if (isPathPointAvailableToMove(numberOfStepsToMove, numberOfStepsAlreadyMove, pathParent_))
             {
-
+                currentPathPoint.RescaleandRepositioningAllPlayerPiece();
                 transform.position = pathParent_[i].transform.position;
+                if (GameManager.gm.sound) { GameManager.gm.ads.Play(); }
                 yield return new WaitForSeconds(0.35f);
             }
         }

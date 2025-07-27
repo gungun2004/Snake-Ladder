@@ -12,6 +12,7 @@ public class RollingDice : MonoBehaviour
    List <PlayerPiece> playerPieces;
     PathPoint[] currentPathPoint;
     public PlayerPiece currentPlayerPiece;
+    public Dice diceSound;
    
     public void OnMouseDown()
     {
@@ -28,9 +29,10 @@ public class RollingDice : MonoBehaviour
         if (GameManager.gm.canDiceRoll)
         {
             GameManager.gm.canDiceRoll = false;
+            if (GameManager.gm.sound) { diceSound.playSound(); }
             numberSpriteHolder.gameObject.SetActive(false);
             rollingDiceAnimation.gameObject.SetActive(true);
-            yield return new WaitForSeconds(0.8f);
+            yield return new WaitForSeconds(0.5f);
             int maxnum = 6;
             if(GameManager.gm.totalSix==2)
             {
@@ -56,20 +58,29 @@ public class RollingDice : MonoBehaviour
 
             if (playerCanMove())
             {
-                if(outPlayer==0)
+                if (outPlayer == 0)
                 {
-                    ReadyToMove();
-                   
+                    ReadyToMove(0);
+
                 }
                 else
                 {
-                    currentPlayerPiece.MovePlayer(currentPathPoint);
+                    if (GameManager.gm.totalPlayersCanPlay == 1 && outPlayer < 4 && GameManager.gm.numberOfStepsToMove==6)
+                    {
+                        robotOut();
+                     
+                    }
+                    else
+                    {
+                        currentPlayerPiece.MovePlayer(currentPathPoint);
+                    }
+                  
                 }
             }
             else
              if (GameManager.gm.numberOfStepsToMove != 6 && outPlayer == 0)
             {
-               
+
                 yield return new WaitForSeconds(0.5f);
                 GameManager.gm.transferDice = true;
                 GameManager.gm.rollingDiceTrasfer();
@@ -156,7 +167,7 @@ public class RollingDice : MonoBehaviour
             return false;
     }
 
-    void ReadyToMove()
+    void ReadyToMove(int pos)
     {
 
         if (GameManager.gm.rollingDice == GameManager.gm.rollingDiceList[0])
@@ -173,7 +184,18 @@ public class RollingDice : MonoBehaviour
         {
              GameManager.gm.yellowOutPlayer += 1;
         }
-        playerPieces[0].MakePlayerReadyToMove(currentPathPoint);
+        playerPieces[pos].MakePlayerReadyToMove(currentPathPoint);
+    }
+   void robotOut()
+    {
+        for (int i = 0; i < playerPieces.Count; i++)
+        {
+            if (!playerPieces[i].isReady)
+            {
+                ReadyToMove(i);
+                return;
+            }
+        }
     }
 }
 
