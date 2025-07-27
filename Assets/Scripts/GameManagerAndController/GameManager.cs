@@ -30,9 +30,13 @@ public class GameManager : MonoBehaviour
     public List<PlayerPiece> greenPlayerPieces;
     public List<PlayerPiece> redPlayerPieces;
     public List <PlayerPiece> yellowPlayerPieces;
+
+    public AudioSource ads;
+    public bool sound = true;
     private void Awake()
     {
         gm = this;
+        ads = GetComponent<AudioSource>();
     }
     public void AddPathPoint(PathPoint pathPoint)
     {
