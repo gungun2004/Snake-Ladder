@@ -38,6 +38,7 @@ public class PlayerPiece : MonoBehaviour
     }
     private IEnumerator MoveStep_enum(PathPoint[] pathParent_)
     {
+        yield return new WaitForSeconds(0.25f);
         numberOfStepsToMove = GameManager.gm.numberOfStepsToMove;
 
         int targetStep = numberOfStepsAlreadyMove + numberOfStepsToMove;
@@ -63,11 +64,12 @@ public class PlayerPiece : MonoBehaviour
             priviousPathPoint.RemovePlayerPiece(this);
 
             currentPathPoint = pathParent_[numberOfStepsAlreadyMove-1];
-            currentPathPoint.AddPlayerPiece(this);
+            bool transfer=currentPathPoint.AddPlayerPiece(this);
+            currentPathPoint.RescaleandRepositioningAllPlayerPiece();
             GameManager.gm.AddPathPoint(currentPathPoint);
 
             priviousPathPoint = currentPathPoint;
-            if(numberOfStepsToMove!=6)
+            if(numberOfStepsToMove!=6 && transfer)
             {
                 GameManager.gm.transferDice = true;
             }
