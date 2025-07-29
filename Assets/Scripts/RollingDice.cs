@@ -9,6 +9,7 @@ public class RollingDice : MonoBehaviour
     [SerializeField] SpriteRenderer rollingDiceAnimation;
     Coroutine generateRandomNumberDice;
     int outPlayer;
+  
    List <PlayerPiece> playerPieces;
     PathPoint[] currentPathPoint;
     public PlayerPiece currentPlayerPiece;
