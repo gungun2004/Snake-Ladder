@@ -13,4 +13,3 @@ public class Home : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
-gi
