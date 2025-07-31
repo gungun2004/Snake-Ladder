@@ -11,6 +11,7 @@ public class PlayerPiece : MonoBehaviour
     Coroutine playerMovement;
     public PathPoint priviousPathPoint;
     public PathPoint currentPathPoint;
+    public bool hasFinished = false;
 
     [System.Obsolete]
     private void Awake()
@@ -75,6 +76,11 @@ public class PlayerPiece : MonoBehaviour
             priviousPathPoint.RemovePlayerPiece(this);
 
             currentPathPoint = pathParent_[numberOfStepsAlreadyMove - 1];
+            if (currentPathPoint.name == "ComanPathPoint")
+            {
+                hasFinished = true;
+            }
+
             bool transfer = currentPathPoint.AddPlayerPiece(this);
             currentPathPoint.RescaleandRepositioningAllPlayerPiece();
             transform.localScale = Vector3.one; // 🔧 Ensure scale stays correct here too
