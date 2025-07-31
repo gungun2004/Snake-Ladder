@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 public class RollingDice : MonoBehaviour
@@ -9,12 +9,11 @@ public class RollingDice : MonoBehaviour
     [SerializeField] SpriteRenderer rollingDiceAnimation;
     Coroutine generateRandomNumberDice;
     int outPlayer;
-  
-   List <PlayerPiece> playerPieces;
+    List<PlayerPiece> playerPieces;
     PathPoint[] currentPathPoint;
     public PlayerPiece currentPlayerPiece;
     public Dice diceSound;
-   
+
     public void OnMouseDown()
     {
         generateRandomNumberDice = StartCoroutine(rollDice());
@@ -35,14 +34,14 @@ public class RollingDice : MonoBehaviour
             rollingDiceAnimation.gameObject.SetActive(true);
             yield return new WaitForSeconds(0.5f);
             int maxnum = 6;
-            if(GameManager.gm.totalSix==2)
+            if (GameManager.gm.totalSix == 2)
             {
                 maxnum = 5;
                 GameManager.gm.totalSix = 0;
             }
 
             numberGot = Random.Range(0, maxnum);
-            if(numberGot==5)
+            if (numberGot == 5)
             {
                 GameManager.gm.totalSix += 1;
             }
@@ -66,34 +65,31 @@ public class RollingDice : MonoBehaviour
                 }
                 else
                 {
-                    if (GameManager.gm.totalPlayersCanPlay == 1 && outPlayer < 4 && GameManager.gm.numberOfStepsToMove==6)
+                    if (GameManager.gm.totalPlayersCanPlay == 1 && outPlayer < 4 && GameManager.gm.numberOfStepsToMove == 6)
                     {
                         robotOut();
-                     
+
                     }
                     else
                     {
                         currentPlayerPiece.MovePlayer(currentPathPoint);
                     }
-                  
+
                 }
             }
             else
-             if (GameManager.gm.numberOfStepsToMove != 6 && outPlayer == 0)
             {
-
                 yield return new WaitForSeconds(0.5f);
-                GameManager.gm.transferDice = true;
-                GameManager.gm.rollingDiceTrasfer();
-
+                CheckIfAnyValidMove();  // 🔁 new behavior
             }
+
 
 
             if (generateRandomNumberDice != null)
             {
                 StopCoroutine(rollDice());
             }
-        }     
+        }
 
     }
     public void outPlayers()
@@ -107,7 +103,7 @@ public class RollingDice : MonoBehaviour
         else if (GameManager.gm.rollingDice == GameManager.gm.rollingDiceList[1])
         {
             playerPieces = GameManager.gm.redPlayerPieces;
-             currentPathPoint = playerPieces[0].pathParent.RedPathPoint;
+            currentPathPoint = playerPieces[0].pathParent.RedPathPoint;
             outPlayer = GameManager.gm.redOutPlayer;
         }
         else if (GameManager.gm.rollingDice == GameManager.gm.rollingDiceList[2])
@@ -126,11 +122,11 @@ public class RollingDice : MonoBehaviour
 
     public bool playerCanMove()
     {
-        if(GameManager.gm.totalPlayersCanPlay==1)
+        if (GameManager.gm.totalPlayersCanPlay == 1)
         {
             if (GameManager.gm.rollingDice == GameManager.gm.rollingDiceList[2])
             {
-                if(outPlayer>0)
+                if (outPlayer > 0)
                 {
                     for (int i = 0; i < playerPieces.Count; i++)
                     {
@@ -143,29 +139,29 @@ public class RollingDice : MonoBehaviour
                             }
                         }
                     }
-                    
+
                 }
             }
         }
-         if(outPlayer==1 && GameManager.gm.numberOfStepsToMove != 6)
+        if (outPlayer == 1 && GameManager.gm.numberOfStepsToMove != 6)
         {
-            for(int i=0; i<playerPieces.Count;i++)
+            for (int i = 0; i < playerPieces.Count; i++)
             {
                 if (playerPieces[i].isReady)
                 {
-                    if (playerPieces[i].isPathPointAvailableToMove(GameManager.gm.numberOfStepsToMove, playerPieces[i].numberOfStepsAlreadyMove,currentPathPoint))
+                    if (playerPieces[i].isPathPointAvailableToMove(GameManager.gm.numberOfStepsToMove, playerPieces[i].numberOfStepsAlreadyMove, currentPathPoint))
                     {
-                        currentPlayerPiece= playerPieces[i];
+                        currentPlayerPiece = playerPieces[i];
                         return true;
                     }
                 }
             }
         }
-        else if(outPlayer==0 && GameManager.gm.numberOfStepsToMove==6)
+        else if (outPlayer == 0 && GameManager.gm.numberOfStepsToMove == 6)
         {
             return true;
         }
-            return false;
+        return false;
     }
 
     void ReadyToMove(int pos)
@@ -173,21 +169,23 @@ public class RollingDice : MonoBehaviour
 
         if (GameManager.gm.rollingDice == GameManager.gm.rollingDiceList[0])
         {
-             GameManager.gm.blueOutPlayer+=1;
+            GameManager.gm.blueOutPlayer += 1;
         }
         else if (GameManager.gm.rollingDice == GameManager.gm.rollingDiceList[1])
-        { GameManager.gm.redOutPlayer += 1;
+        {
+            GameManager.gm.redOutPlayer += 1;
         }
         else if (GameManager.gm.rollingDice == GameManager.gm.rollingDiceList[2])
-        { GameManager.gm.greenOutPlayer+=1;
+        {
+            GameManager.gm.greenOutPlayer += 1;
         }
         else
         {
-             GameManager.gm.yellowOutPlayer += 1;
+            GameManager.gm.yellowOutPlayer += 1;
         }
         playerPieces[pos].MakePlayerReadyToMove(currentPathPoint);
     }
-   void robotOut()
+    void robotOut()
     {
         for (int i = 0; i < playerPieces.Count; i++)
         {
@@ -198,5 +196,38 @@ public class RollingDice : MonoBehaviour
             }
         }
     }
-}
+    void CheckIfAnyValidMove()
+    {
+        bool canAnyPawnMove = false;
 
+        foreach (PlayerPiece pawn in playerPieces)
+        {
+            if (pawn.isReady)
+            {
+                // Check if the pawn has enough space to move
+                if (pawn.isPathPointAvailableToMove(GameManager.gm.numberOfStepsToMove, pawn.numberOfStepsAlreadyMove, currentPathPoint))
+                {
+                    canAnyPawnMove = true;
+                    break;
+                }
+            }
+            else
+            {
+                // Only one pawn out, and it's not a 6 — can't bring new pawn
+                if (GameManager.gm.numberOfStepsToMove == 6)
+                {
+                    canAnyPawnMove = true;
+                    break;
+                }
+            }
+        }
+
+        if (!canAnyPawnMove)
+        {
+            Debug.Log("❌ No valid moves — transferring turn.");
+            GameManager.gm.transferDice = true;
+            GameManager.gm.rollingDiceTrasfer();
+        }
+    }
+
+}

@@ -4,7 +4,7 @@ using System.Collections;
 public class PathPoint : MonoBehaviour
 {
     public PathObjectPoint pathObjectPoint;
-    public  List<PlayerPiece> playerPieceList = new List<PlayerPiece>();
+    public List<PlayerPiece> playerPieceList = new List<PlayerPiece>();
     PathPoint[] pathPointToMoveOn_;
 
     void Start()
@@ -21,37 +21,45 @@ public class PathPoint : MonoBehaviour
             return false;
 
         }
-        if (!pathObjectPoint.SafePoint.Contains(this)) 
+        if (!pathObjectPoint.SafePoint.Contains(this))
         {
             if (playerPieceList.Count == 1)
             {
+                if (playerPieceList[0].hasFinished)
+                {
+                    // Let finished player sit there safely; just add new one
+                    playerPieceList.Add(playerPiece_);
+                    return false;
+                }
+
                 string prePlayerPieceName = playerPieceList[0].name;
                 string currentPlayerPieceName = playerPiece_.name;
                 currentPlayerPieceName = currentPlayerPieceName.Substring(0, currentPlayerPieceName.Length - 4);
+
                 if (!prePlayerPieceName.Contains(currentPlayerPieceName))
                 {
                     playerPieceList[0].isReady = false;
-
                     StartCoroutine(reverOnStart(playerPieceList[0]));
-
                     playerPieceList[0].numberOfStepsAlreadyMove = 0;
                     RemovePlayerPiece(playerPieceList[0]);
+
                     playerPieceList.Add(playerPiece_);
                     return false;
                 }
             }
         }
+
         addPlayer(playerPiece_);
         return true;
     }
     IEnumerator reverOnStart(PlayerPiece playerPiece_)
     {
-        if(playerPiece_.name.Contains("blue")){GameManager.gm.blueOutPlayer -= 1;pathPointToMoveOn_ = pathObjectPoint.BluePathPoint;}
-        else if (playerPiece_.name.Contains("Red")){GameManager.gm.redOutPlayer -= 1; pathPointToMoveOn_ = pathObjectPoint.RedPathPoint;}
-        else if (playerPiece_.name.Contains("Green")){GameManager.gm.greenOutPlayer -= 1; pathPointToMoveOn_ = pathObjectPoint.GreenPathPoint;}
-        else{GameManager.gm.yellowOutPlayer -= 1; pathPointToMoveOn_ = pathObjectPoint.YellowPathPoint;}
+        if (playerPiece_.name.Contains("blue")) { GameManager.gm.blueOutPlayer -= 1; pathPointToMoveOn_ = pathObjectPoint.BluePathPoint; }
+        else if (playerPiece_.name.Contains("Red")) { GameManager.gm.redOutPlayer -= 1; pathPointToMoveOn_ = pathObjectPoint.RedPathPoint; }
+        else if (playerPiece_.name.Contains("Green")) { GameManager.gm.greenOutPlayer -= 1; pathPointToMoveOn_ = pathObjectPoint.GreenPathPoint; }
+        else { GameManager.gm.yellowOutPlayer -= 1; pathPointToMoveOn_ = pathObjectPoint.YellowPathPoint; }
 
-        for(int i=playerPiece_.numberOfStepsAlreadyMove-1;i>=0;i--)
+        for (int i = playerPiece_.numberOfStepsAlreadyMove - 1; i >= 0; i--)
         {
             playerPiece_.transform.position = pathPointToMoveOn_[i].transform.position;
             yield return new WaitForSeconds(0.03f);
@@ -61,9 +69,9 @@ public class PathPoint : MonoBehaviour
     }
     int BasePointPosition(string name)
     {
-        for(int i=0;i<pathObjectPoint.BasePoint.Length;i++)
+        for (int i = 0; i < pathObjectPoint.BasePoint.Length; i++)
         {
-            if (pathObjectPoint.BasePoint[i].name==name)
+            if (pathObjectPoint.BasePoint[i].name == name)
             {
                 return i;
             }
@@ -73,11 +81,11 @@ public class PathPoint : MonoBehaviour
     void complete(PlayerPiece playerPiece_)
     {
         int totalCompletePlayers;
-        if (playerPiece_.name.Contains("blue")) { GameManager.gm.blueOutPlayer -= 1; totalCompletePlayers=GameManager.gm.blueCompletePlayer += 1; }
-        else if (playerPiece_.name.Contains("Red")) { GameManager.gm.redOutPlayer -= 1; totalCompletePlayers= GameManager.gm.redCompletePlayer += 1; }
-        else if (playerPiece_.name.Contains("Green")) { GameManager.gm.greenOutPlayer -= 1; totalCompletePlayers= GameManager.gm.greenCompletePlayer += 1; }
-        else { GameManager.gm.yellowOutPlayer -= 1; totalCompletePlayers= GameManager.gm.yellowCompletePlayer += 1; }
-        if(totalCompletePlayers==4)
+        if (playerPiece_.name.Contains("blue")) { GameManager.gm.blueOutPlayer -= 1; totalCompletePlayers = GameManager.gm.blueCompletePlayer += 1; }
+        else if (playerPiece_.name.Contains("Red")) { GameManager.gm.redOutPlayer -= 1; totalCompletePlayers = GameManager.gm.redCompletePlayer += 1; }
+        else if (playerPiece_.name.Contains("Green")) { GameManager.gm.greenOutPlayer -= 1; totalCompletePlayers = GameManager.gm.greenCompletePlayer += 1; }
+        else { GameManager.gm.yellowOutPlayer -= 1; totalCompletePlayers = GameManager.gm.yellowCompletePlayer += 1; }
+        if (totalCompletePlayers == 4)
         {
             //celebration for completing 
         }
@@ -87,13 +95,13 @@ public class PathPoint : MonoBehaviour
         playerPieceList.Add(playerPiece_);
         RescaleandRepositioningAllPlayerPiece();
     }
-    public void RemovePlayerPiece(PlayerPiece  playerPiece_)
+    public void RemovePlayerPiece(PlayerPiece playerPiece_)
     {
-       if(playerPieceList.Contains(playerPiece_))
-       {
-           playerPieceList.Remove(playerPiece_);
-           RescaleandRepositioningAllPlayerPiece();
-       }
+        if (playerPieceList.Contains(playerPiece_))
+        {
+            playerPieceList.Remove(playerPiece_);
+            RescaleandRepositioningAllPlayerPiece();
+        }
     }
 
     public void RescaleandRepositioningAllPlayerPiece()
@@ -101,7 +109,7 @@ public class PathPoint : MonoBehaviour
         int plsCount = playerPieceList.Count;
         if (plsCount == 0) return;
 
-        bool isOdd = (plsCount / 2) == 0 ?false :true;
+        bool isOdd = (plsCount / 2) == 0 ? false : true;
 
         int extent = plsCount / 2;
         int counter = 0;
@@ -113,19 +121,20 @@ public class PathPoint : MonoBehaviour
                 playerPieceList[counter].transform.localScale = new Vector3(pathObjectPoint.scales[plsCount - 1], pathObjectPoint.scales[plsCount - 1], 1f);
 
                 playerPieceList[counter].transform.position = new Vector3(transform.position.x + (i * pathObjectPoint.positionDifference[plsCount - 1]), transform.position.y, 0f);
-             
+
             }
         }
         else
         {
-            for (int i = -extent; i < extent; i++) {
+            for (int i = -extent; i < extent; i++)
+            {
 
                 playerPieceList[counter].transform.localScale = new Vector3(pathObjectPoint.scales[plsCount - 1], pathObjectPoint.scales[plsCount - 1], 1f);
 
                 playerPieceList[counter].transform.position = new Vector3(transform.position.x + (i * pathObjectPoint.positionDifference[plsCount - 1]), transform.position.y, 0f);
-               
+
             }
-        
+
         }
 
         for (int i = 0; i < playerPieceList.Count; i++)
